@@ -1,0 +1,87 @@
+public class Cross {
+    int runDistance;
+    int swimDistance;
+    int wallHeight;
+
+    public Cross (int runDistance, int swimDistance, int wallHeight) {
+        this.runDistance = runDistance;
+        this.swimDistance=swimDistance;
+        this.wallHeight=wallHeight;
+    }
+
+    void dataCross (Team team) {
+        team.doIt(this);
+    }
+}
+_______________
+
+public class TeamMember {
+    int pp;
+    String name;
+    int maxRunDistance;
+    int maxJumpHeight;
+    int maxSwimDistance;
+
+    boolean crossSuccess;
+
+    public TeamMember(int pp, String name, int maxRunDistance, int maxJumpHeight, int maxSwimDistance) {
+        this.name = name;
+        this.maxJumpHeight = maxJumpHeight;
+        this.maxSwimDistance = maxSwimDistance;
+        this.maxRunDistance = maxRunDistance;
+        this.crossSuccess=false;
+    }
+
+}
+______________________
+public class Team {
+    String name;
+
+    public Team(String name) {
+        this.name = name;
+    }
+
+    TeamMember[] teamMembers = {
+            new TeamMember(1, "Barsik", 10, 5, 0),
+            new TeamMember(2, "Druzhok", 20, 5, 10),
+            new TeamMember(3, "Superman", 2000, 100, 3000),
+            new TeamMember(4, "Woman", 10, 1, 10),
+    };
+
+    public void doIt(Cross cross) {
+        for (TeamMember o : teamMembers) {
+            if (o.maxJumpHeight >= cross.wallHeight && o.maxSwimDistance >= cross.swimDistance && o.maxRunDistance >= cross.runDistance) {
+                System.out.println(name + " прошел весь кросс");
+                o.crossSuccess = true;
+            } else if (o.maxJumpHeight >= cross.wallHeight && o.maxSwimDistance >= cross.swimDistance) {
+                System.out.println(name + " не смог пробежать");
+            } else if (o.maxJumpHeight >= cross.wallHeight) {
+                System.out.println(name + " преодолел только первое препятствие - стену");
+            } else {
+                System.out.println(name + " не прошел испытание совсем");
+            }
+        }
+    }
+
+    public void showResults() {
+        System.out.println("Участники команды, которые прошли кросс");
+        for (TeamMember o : teamMembers) {
+            if (o.crossSuccess) {
+                System.out.println(o.name + " прошел кросс");
+            } else {
+                System.out.println(o.name + " не прошел кросс");
+            }
+        }
+    }
+}
+________________________________
+
+public class Main {
+    public static void main(String[] args) {
+       Cross cross = new Cross(15,15,2);
+       Team team = new Team("winners");
+       team.doIt(cross);
+       team.showResults();
+    }
+}
+
